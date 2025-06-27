@@ -90,7 +90,7 @@ def main():
         "mqtt": {
             "broker": "test.mosquitto.org",  # 実際のMQTTブローカーに変更
             "port": 1883,
-            "topic": "usb/power/control"
+            "topic": "usb/power/control/unique_7x9k2m8p4q"
         },
         "usb": {
             "hub_device": "1-1",  # 実際のUSBハブデバイスに変更
