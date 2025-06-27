@@ -1,0 +1,44 @@
+name: MQTT Publish on MR Approval
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  mqtt-publish:
+    if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Publish MQTT Message
+      run: |
+        pip install paho-mqtt
+        python3 << 'EOF'
+        import paho.mqtt.client as mqtt
+        import json
+        import time
+        
+        # MQTT設定（実際の値に変更してください）
+        MQTT_BROKER = "${{ secrets.MQTT_BROKER }}"  # 例: "test.mosquitto.org"
+        MQTT_PORT = 1883
+        MQTT_TOPIC = "usb/power/control"
+        
+        # MQTTクライアント設定
+        client = mqtt.Client()
+        
+        # 接続
+        client.connect(MQTT_BROKER, MQTT_PORT, 60)
+        
+        # メッセージ送信
+        message = {
+            "action": "power_on",
+            "pr_number": ${{ github.event.pull_request.number }},
+            "repository": "${{ github.repository }}",
+            "timestamp": int(time.time())
+        }
+        
+        client.publish(MQTT_TOPIC, json.dumps(message))
+        client.disconnect()
+        
+        print(f"MQTT message published: {message}")
+        EOF
