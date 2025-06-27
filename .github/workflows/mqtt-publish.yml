@@ -33,10 +33,9 @@ jobs:
         client.connect(MQTT_BROKER, MQTT_PORT, 60)
         
         # メッセージ送信
-        pr_number = "${{ github.event.pull_request.number or 'N/A' }}"
         message = {
             "action": "power_on",
-            "pr_number": pr_number if pr_number != "N/A" else "manual_trigger",
+            "pr_number": "test_trigger",
             "repository": "${{ github.repository }}",
             "event_name": "${{ github.event_name }}",
             "timestamp": int(time.time())
