@@ -19,7 +19,7 @@ jobs:
         import time
         
         # MQTT設定（実際の値に変更してください）
-        MQTT_BROKER = "${{ secrets.MQTT_BROKER }}"  # 例: "test.mosquitto.org"
+        MQTT_BROKER = "test.mosquitto.org"
         MQTT_PORT = 1883
         MQTT_TOPIC = "usb/power/control/unique_7x9k2m8p4q"
         
