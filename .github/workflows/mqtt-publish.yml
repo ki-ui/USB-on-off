@@ -3,10 +3,13 @@ name: MQTT Publish on MR Approval
 on:
   pull_request_review:
     types: [submitted]
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   mqtt-publish:
-    if: github.event.review.state == 'approved'
+    if: github.event.review.state == 'approved' || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     
     steps:
